@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barber Premium - Barbearia de Elite</title>
+  <meta name="description" content="A barbearia mais premium da região." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="barbershop.css" />
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">BARBER <span>PREMIUM</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#services">Serviços</a></li>
+        <li><a href="#team">Equipe</a></li>
+        <li><a href="#location">Localização</a></li>
+        <li><a href="#" id="nav-client-btn">Minha Reserva</a></li>
+        <li><a href="#" class="btn btn-primary btn-sm" id="nav-book-btn">Agendar</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-close" id="mobile-close">✕</button>
+  <a href="#about" class="mobile-link">Sobre</a>
+  <a href="#services" class="mobile-link">Serviços</a>
+  <a href="#team" class="mobile-link">Equipe</a>
+  <a href="#location" class="mobile-link">Localização</a>
+  <a href="#" class="mobile-link" id="mobile-client-btn">Minha Reserva</a>
+  <a href="#" class="btn btn-primary" id="mobile-book-btn">Agendar Agora</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-body">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="label-gold">Est. 2018</span></div>
+      <h1 class="hero-title">A Arte do<br><em>Homem Moderno</em></h1>
+      <p class="hero-subtitle">Estilo, Respeito e Tradição. Profissionais especializados em um ambiente exclusivo dedicado à excelência da barbearia masculina.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="hero-book-btn">✂ Agendar Horário</button>
+        <a href="#services" class="btn btn-outline">Ver Serviços</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- INFO BAR -->
+<section id="infobar">
+  <div class="container">
+    <div class="infobar-grid">
+      <div class="infobar-item">
+        <div class="infobar-icon">📍</div>
+        <div><div class="infobar-label">Endereço</div><div class="infobar-value">Av. Das Nações, 1234 - Centro, SP</div></div>
+      </div>
+      <div class="infobar-item">
+        <div class="infobar-icon">🕐</div>
+        <div><div class="infobar-label">Horário</div><div class="infobar-value">Seg–Sex 08h–20h | Sáb 08h–18h</div></div>
+      </div>
+      <div class="infobar-item">
+        <div class="infobar-icon">📞</div>
+        <div><div class="infobar-label">Telefone</div><div class="infobar-value">(11) 99999-8888</div></div>
+      </div>
+      <div class="infobar-item">
+        <div class="infobar-icon">⭐</div>
+        <div><div class="infobar-label">Avaliação</div><div class="infobar-value">4.9 ⭐ — +500 avaliações</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80" alt="Interior" class="about-img" />
+        <div class="about-img-deco"></div>
+      </div>
+      <div>
+        <div class="label-gold" style="margin-bottom:16px;">Nossa História</div>
+        <h2 class="heading-lg" style="margin-bottom:24px;">Tradição que se<br>Reinventa Todo Dia</h2>
+        <p class="text-muted" style="font-size:14px;line-height:1.9;margin-bottom:16px;">Fundada em 2018, a Barber Premium nasceu da paixão de transformar a experiência masculina de cuidados pessoais em um verdadeiro ritual de luxo.</p>
+        <p class="text-muted" style="font-size:14px;line-height:1.9;margin-bottom:32px;">Proporcionar uma experiência premium de barbearia, combinando técnicas clássicas com tendências contemporâneas, em um ambiente que inspira confiança e sofisticação.</p>
+        <div class="diffs">
+          <div class="diff-item">Ambiente premium com lounge de espera</div>
+          <div class="diff-item">Bebidas cortesia durante o atendimento</div>
+          <div class="diff-item">Produtos importados de alta qualidade</div>
+          <div class="diff-item">Técnicas exclusivas de visagismo</div>
+          <div class="diff-item">Programa de fidelidade com benefícios reais</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section" style="background:var(--bg2);">
+  <div class="container">
+    <div class="section-header">
+      <div class="label-gold">Nossos Serviços</div>
+      <h2 class="heading-lg" style="margin-top:12px;">Arte em Cada Detalhe</h2>
+      <p class="text-muted">Serviços premium executados por profissionais especializados.</p>
+    </div>
+    <div class="services-grid" id="services-grid"><div class="loading-wrap"><div class="spinner"></div></div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section-sm">
+  <div class="container">
+    <div class="section-header">
+      <div class="label-gold">Galeria</div>
+      <h2 class="heading-lg" style="margin-top:12px;">Nosso Espaço</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80" alt="Barbearia" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=600&q=80" alt="Corte" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="Barba" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Interior" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80" alt="Barbeiro" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="section" style="background:var(--bg2);">
+  <div class="container">
+    <div class="section-header">
+      <div class="label-gold">Nossa Equipe</div>
+      <h2 class="heading-lg" style="margin-top:12px;">Mestres do Estilo</h2>
+      <p class="text-muted">Profissionais apaixonados pela arte da barbearia.</p>
+    </div>
+    <div class="team-grid" id="team-grid"><div class="loading-wrap"><div class="spinner"></div></div></div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="label-gold">Onde Estamos</div>
+      <h2 class="heading-lg" style="margin-top:12px;">Venha Nos Visitar</h2>
+    </div>
+    <div class="location-grid">
+      <div id="map"></div>
+      <div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="form-label">Endereço</div><div>Av. Das Nações, 1234 - Centro, São Paulo - SP</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div><div class="form-label">Telefone</div><a href="tel:+5511999998888" style="font-weight:600;">(11) 99999-8888</a></div></div>
+        <div class="contact-item"><div class="contact-icon">📧</div><div><div class="form-label">Email</div><a href="mailto:contato@barberpremium.com.br">contato@barberpremium.com.br</a></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="form-label">Horários</div><div style="font-size:13px;">Seg–Sex: 08h–20h | Sáb: 08h–18h</div><div style="font-size:13px;color:var(--muted);">Dom: Fechado</div></div></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:24px;" id="location-book-btn">✂ Agendar Agora</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">BARBER PREMIUM</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.8;max-width:300px;">A barbearia mais premium da região. Ambiente exclusivo dedicado à arte da barbearia masculina.</p>
+      </div>
+      <div>
+        <div class="form-label" style="margin-bottom:16px;">Navegação</div>
+        <ul class="footer-links">
+          <li><a href="#about">Sobre Nós</a></li>
+          <li><a href="#services">Serviços</a></li>
+          <li><a href="#team">Equipe</a></li>
+          <li><a href="#location">Localização</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="form-label" style="margin-bottom:16px;">Contato</div>
+        <ul class="footer-links">
+          <li><a href="tel:+5511999998888">(11) 99999-8888</a></li>
+          <li><a href="https://wa.me/5511999998888" target="_blank">WhatsApp</a></li>
+          <li><a href="https://instagram.com/barberpremium" target="_blank">@barberpremium</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2024 Barber Premium. Todos os direitos reservados.</p>
+      <p class="footer-copy">Feito com ♥ em São Paulo</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-btns">
+  <a href="https://wa.me/5511999998888" target="_blank" class="floating-btn floating-wa" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="https://instagram.com/barberpremium" target="_blank" class="floating-btn floating-ig" title="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-backdrop" id="booking-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Agendar Horário</h2>
+      <button class="modal-close" id="booking-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="booking-steps-nav" id="booking-steps-nav"></div>
+      <div class="booking-step active" id="step-1">
+        <div class="label-gold" style="margin-bottom:16px;">Escolha o Serviço</div>
+        <div class="selection-grid" id="service-grid"></div>
+        <div class="step-footer"><button class="btn btn-primary" onclick="nextStep()">Próximo →</button></div>
+      </div>
+      <div class="booking-step" id="step-2">
+        <div class="label-gold" style="margin-bottom:16px;">Escolha o Profissional</div>
+        <div class="selection-grid" id="barber-grid"></div>
+        <div class="step-footer"><button class="btn btn-ghost" onclick="prevStep()">← Voltar</button><button class="btn btn-primary" onclick="nextStep()">Próximo →</button></div>
+      </div>
+      <div class="booking-step" id="step-3">
+        <div class="label-gold" style="margin-bottom:16px;">Escolha a Data</div>
+        <div class="cal-nav"><button class="btn btn-ghost btn-sm" onclick="calPrev()">← Anterior</button><div class="cal-month-title" id="cal-month-title"></div><button class="btn btn-ghost btn-sm" onclick="calNext()">Próximo →</button></div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+        <div class="step-footer"><button class="btn btn-ghost" onclick="prevStep()">← Voltar</button><button class="btn btn-primary" onclick="nextStep()">Próximo →</button></div>
+      </div>
+      <div class="booking-step" id="step-4">
+        <div class="label-gold" style="margin-bottom:16px;">Escolha o Horário</div>
+        <div class="time-grid" id="time-grid"></div>
+        <div class="step-footer"><button class="btn btn-ghost" onclick="prevStep()">← Voltar</button><button class="btn btn-primary" onclick="nextStep()">Próximo →</button></div>
+      </div>
+      <div class="booking-step" id="step-5">
+        <div class="label-gold" style="margin-bottom:16px;">Confirmar Agendamento</div>
+        <div class="summary-box" id="booking-summary"></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Nome <span class="req">*</span></label><input type="text" id="client-name" placeholder="Seu nome" /></div><div class="form-group"><label class="form-label">Telefone <span class="req">*</span></label><input type="tel" id="client-phone" placeholder="(11) 99999-9999" /></div></div>
+        <div class="form-group"><label class="form-label">Email</label><input type="email" id="client-email" placeholder="seu@email.com" /></div>
+        <div class="form-group"><label class="form-label">Pagamento</label><select id="payment-method"><option value="">Selecione...</option><option>PIX</option><option>Dinheiro</option><option>Cartão de Débito</option><option>Cartão de Crédito</option></select></div>
+        <div class="form-group"><label class="form-label">Observações</label><textarea id="booking-notes" rows="2" placeholder="Detalhes especiais..."></textarea></div>
+        <div class="step-footer"><button class="btn btn-ghost" onclick="prevStep()">← Voltar</button><button class="btn btn-primary" onclick="confirmBooking()" id="confirm-btn">Confirmar ✓</button></div>
+      </div>
+      <div class="booking-step" id="step-6">
+        <div style="text-align:center;padding:20px 0;">
+          <div class="success-icon">✓</div>
+          <div class="label-gold">Confirmado!</div>
+          <h3 style="font-family:var(--font-display);font-size:1.8rem;margin:12px 0;">Tudo certo!</h3>
+          <p class="text-muted" style="font-size:14px;">Seu código de reserva:</p>
+          <div class="booking-code" id="success-code">—</div>
+          <div class="summary-box" id="success-summary" style="text-align:left;margin:24px 0;"></div>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-outline btn-sm" onclick="copyCode()">📋 Copiar Código</button>
+            <button class="btn btn-sm" style="background:rgba(37,211,102,0.1);color:#25D366;border:1px solid rgba(37,211,102,0.3);" onclick="shareWhatsApp()">💬 WhatsApp</button>
+            <button class="btn btn-primary btn-sm" onclick="closeBookingModal()">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT MODAL -->
+<div class="modal-backdrop" id="client-modal">
+  <div class="modal">
+    <div class="modal-header"><h2 class="modal-title">Minha Reserva</h2><button class="modal-close" onclick="closeClientModal()">✕</button></div>
+    <div class="modal-body" style="max-width:500px;margin:0 auto;">
+      <div id="client-search-view">
+        <p class="text-muted" style="font-size:14px;margin-bottom:24px;">Informe seu telefone para consultar seus agendamentos.</p>
+        <div class="form-group"><label class="form-label">Telefone</label><input type="tel" id="client-search-phone" placeholder="(11) 99999-9999" /></div>
+        <button class="btn btn-primary" style="width:100%;" onclick="searchClientBookings()">Buscar Agendamentos</button>
+      </div>
+      <div id="client-results-view" style="display:none;">
+        <div id="client-appointments-list"></div>
+        <button class="btn btn-ghost" style="margin-top:24px;" onclick="resetClientSearch()">← Nova Busca</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-backdrop" id="admin-login-modal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header"><h2 class="modal-title">Acesso Admin</h2><button class="modal-close" onclick="closeAdminLogin()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Senha</label><input type="password" id="admin-pwd-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginAdmin()" /></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="loginAdmin()">Entrar</button>
+      <p id="admin-error" style="color:#e74c3c;font-size:13px;margin-top:12px;display:none;">Senha incorreta.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN SECTION -->
+<div id="admin-section" style="display:none;">
+  <div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:68px;z-index:100;">
+    <div class="container" style="display:flex;gap:4px;overflow-x:auto;align-items:center;">
+      <button class="admin-tab active" onclick="switchTab(this,'panel-overview')">Visão Geral</button>
+      <button class="admin-tab" onclick="switchTab(this,'panel-appointments')">Agendamentos</button>
+      <button class="admin-tab" onclick="switchTab(this,'panel-barbers')">Barbeiros</button>
+      <button class="admin-tab" onclick="switchTab(this,'panel-services')">Serviços</button>
+      <button class="admin-tab" onclick="switchTab(this,'panel-coupons')">Cupons</button>
+      <button class="btn btn-sm" style="margin-left:auto;background:rgba(231,76,60,0.1);color:#e74c3c;border:1px solid rgba(231,76,60,0.3);flex-shrink:0;" onclick="logoutAdmin()">Sair</button>
+    </div>
+  </div>
+  <div class="container" style="padding:40px 24px;">
+    <div id="panel-overview" class="admin-panel active"></div>
+    <div id="panel-appointments" class="admin-panel" style="display:none;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <input type="date" id="filter-date" oninput="renderAdminApts()" style="width:auto;" />
+        <select id="filter-barber" onchange="renderAdminApts()" style="width:auto;min-width:160px;"></select>
+        <select id="filter-status" onchange="renderAdminApts()" style="width:auto;min-width:160px;">
+          <option value="">Todos os status</option>
+          <option value="confirmed">Confirmado</option>
+          <option value="completed">Concluído</option>
+          <option value="cancelled">Cancelado</option>
+          <option value="no_show">Não compareceu</option>
+        </select>
+      </div>
+      <div style="overflow-x:auto;background:var(--bg2);border:1px solid var(--border);">
+        <table class="data-table"><thead><tr><th>Data</th><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Barbeiro</th><th>Serviço</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="apts-tbody"></tbody></table>
+      </div>
+    </div>
+    <div id="panel-barbers" class="admin-panel" style="display:none;max-width:600px;">
+      <h3 class="admin-section-title">Adicionar Barbeiro</h3>
+      <div class="form-row"><div class="form-group"><label class="form-label">Nome</label><input type="text" id="nb-name" /></div><div class="form-group"><label class="form-label">Especialidade</label><input type="text" id="nb-spec" /></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Anos Experiência</label><input type="number" id="nb-exp" /></div><div class="form-group" style="display:flex;align-items:flex-end;"><button class="btn btn-primary" style="width:100%;" onclick="addBarber()">+ Adicionar</button></div></div>
+      <div style="height:1px;background:linear-gradient(to right,transparent,var(--primary),transparent);margin:32px 0;"></div>
+      <div id="barbers-list"></div>
+    </div>
+    <div id="panel-services" class="admin-panel" style="display:none;max-width:600px;">
+      <h3 class="admin-section-title">Adicionar Serviço</h3>
+      <div class="form-row"><div class="form-group"><label class="form-label">Nome</label><input type="text" id="ns-name" /></div><div class="form-group"><label class="form-label">Categoria</label><select id="ns-cat"><option value="corte">Corte</option><option value="barba">Barba</option><option value="combo">Combo</option><option value="tratamento">Tratamento</option><option value="outros">Outros</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Preço (R$)</label><input type="number" id="ns-price" /></div><div class="form-group"><label class="form-label">Duração (min)</label><input type="number" id="ns-dur" /></div></div>
+      <div class="form-group"><label class="form-label">Descrição</label><textarea id="ns-desc" rows="2"></textarea></div>
+      <button class="btn btn-primary" onclick="addService()">+ Adicionar Serviço</button>
+      <div style="height:1px;background:linear-gradient(to right,transparent,var(--primary),transparent);margin:32px 0;"></div>
+      <div id="services-admin-list"></div>
+    </div>
+    <div id="panel-coupons" class="admin-panel" style="display:none;max-width:600px;">
+      <h3 class="admin-section-title">Novo Cupom</h3>
+      <div class="form-row"><div class="form-group"><label class="form-label">Código</label><input type="text" id="nc-code" placeholder="EX: PROMO10" /></div><div class="form-group"><label class="form-label">Desconto (%)</label><input type="number" id="nc-pct" placeholder="10" /></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Validade</label><input type="date" id="nc-date" /></div><div class="form-group"><label class="form-label">Usos máximos</label><input type="number" id="nc-max" placeholder="100" /></div></div>
+      <button class="btn btn-primary" onclick="addCoupon()">+ Criar Cupom</button>
+      <div style="height:1px;background:linear-gradient(to right,transparent,var(--primary),transparent);margin:32px 0;"></div>
+      <div id="coupons-list"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="barbershop.js"></script>
+</body>
+</html>
