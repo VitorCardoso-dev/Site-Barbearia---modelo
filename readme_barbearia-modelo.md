@@ -1,62 +1,53 @@
-# Barber Premium - Barbearia de Elite ✂️💈
+# Site de Barbearia — modelo comercial estático
 
-O **Barber Premium** é uma aplicação web moderna, elegante e interativa desenvolvida para barbearias de alto padrão. O sistema oferece uma experiência imersiva para clientes marcarem horários e um painel administrativo completo para a gestão do negócio.
+Template de site responsivo para uma barbearia apresentar seus serviços e receber contatos pelo WhatsApp. Construído com HTML, CSS e JavaScript puro, sem dependências de backend.
 
----
+## O que esta versão faz
 
-## 🚀 Funcionalidades Principais
+- Página institucional responsiva com seções Sobre, Serviços, Galeria e Contato.
+- Botões de contato que abrem uma conversa no WhatsApp com uma mensagem inicial.
+- Links externos com proteção `rel="noopener noreferrer"`.
+- Menu móvel com estado acessível e fechamento pela tecla Escape.
+- Conteúdo dos serviços renderizado com `textContent`, sem inserir dados variáveis com `innerHTML`.
+- Não armazena dados pessoais, reservas ou credenciais no navegador.
 
-### Para Clientes:
-- **Landing Page Imersiva:** Design moderno focado em conversão, com seções de Sobre, Serviços, Galeria, Equipe e Localização (integrada com Leaflet.js).
-- **Sistema de Agendamento em Etapas (Wizard):**
-  1. Escolha do serviço (Cortes, Barbas, Combos, Tratamentos).
-  2. Escolha do profissional (Barbeiros especializados com avaliações).
-  3. Seleção de data em um calendário dinâmico interativo.
-  4. Escolha de horários disponíveis (calculados automaticamente com base na agenda do profissional e horários de almoço).
-  5. Confirmação de dados com suporte a códigos de reserva únicos, cópia rápida e atalho para compartilhamento via WhatsApp.
-- **Consulta de Reserva ("Minha Reserva"):** O cliente pode informar o telefone para localizar, acompanhar o status ou cancelar seus agendamentos ativos.
-- **Botões Flutuantes:** Acesso rápido ao WhatsApp e Instagram oficial.
+## Limites importantes
 
-### Para Administradores:
-- **Painel Administrativo Completo:** Protegido por senha.
-- **Visão Geral (Dashboard):** Métricas de agendamentos e faturamento em tempo real (hoje e no mês atual), além da agenda do dia.
-- **Gerenciamento de Agendamentos:** Filtros por data, barbeiro e status (Confirmado, Concluído, Cancelado, Não compareceu).
-- **Gestão de Barbeiros & Serviços:** Adição e remoção dinâmica de profissionais e catálogo de serviços.
-- **Gestão de Cupons:** Criação de cupons de desconto personalizados.
+Esta é uma página estática de apresentação e captação de contatos. **Não é um sistema de agendamento online**: não verifica disponibilidade, não registra reservas, não oferece painel administrativo e não confirma horários. O agendamento só fica combinado depois que a equipe responder ao cliente.
 
----
+Para oferecer reservas online reais, implemente um backend e um banco de dados com autenticação, controle de acesso, validação de horários no servidor, prevenção de conflitos e política de privacidade adequada. Não volte a colocar senhas ou regras de autorização no JavaScript do navegador.
 
-## 🛠️ Tecnologias Utilizadas
+## Personalização obrigatória antes de publicar
 
-- **HTML5** & **CSS3** (Variáveis CSS, Flexbox, Grid, Design Responsivo)
-- **JavaScript (Vanilla ES6+)** (Arquitetura orientada a estado local com `localStorage`)
-- **Leaflet.js** (Exibição de mapas interativos para localização)
-- **FontAwesome** & **Google Fonts** (Ícones e tipografia de alto padrão como *Syne*, *Inter* e *Cormorant Garamond*)
+Edite o objeto `SHOP` no início de `barbershop.js`:
 
----
+- `name`: nome real do estabelecimento.
+- `whatsapp`: número real no formato internacional, somente dígitos (ex.: `5585999999999`).
+- `instagram`: URL completa do perfil oficial, se houver.
+- `address` e `hours`: caso vá adicionar endereço e horários reais ao conteúdo.
 
-## 📂 Estrutura de Arquivos
+Revise também `index.html` antes da publicação:
 
-```text
-├── index.html       # Estrutura principal da aplicação e modais
-├── barbershop.css   # Estilos, temas escuros, layout responsivo e animações
-└── barbershop.js    # Lógica de negócio, manipulação de estado, calendário e painel admin
-```
+1. Substitua o nome fictício da marca.
+2. Confirme e atualize todos os serviços e preços em `barbershop.js`.
+3. Substitua as fotos de banco por imagens autorizadas do estabelecimento, quando disponíveis.
+4. Ajuste título, descrição e textos para o negócio real.
+5. Remova o aviso de modelo demonstrativo só depois de revisar e substituir todos os dados fictícios.
+6. Teste cada botão de WhatsApp em celular e computador.
+7. Confirme com o proprietário o endereço, horários, preços e formas de contato.
 
----
+O número do WhatsApp fica vazio por padrão de propósito: botões não redirecionam clientes para um telefone de exemplo.
 
-## ⚙️ Como Executar o Projeto
+## Executar localmente
 
-Como o projeto utiliza arquivos estáticos puros (HTML, CSS e JS) e armazena os dados no `localStorage` do navegador, você pode executá-lo de duas formas:
+Abra `index.html` no navegador ou use uma extensão de servidor local. Não há etapa de build.
 
-1. **Diretamente no navegador:** Dê um duplo clique no arquivo `index.html`.
-2. **Via Servidor Local (Recomendado):** Utilize extensões como o *Live Server* no Visual Studio Code para uma melhor experiência.
+## Publicação
 
----
+Pode ser hospedado em um serviço de hospedagem estática. Se o código precisa continuar privado, verifique as opções de publicação do provedor antes de enviar o repositório; o site publicado será público para visitantes, mas isso não exige necessariamente tornar o repositório público.
 
-## 🔐 Acesso ao Painel Administrativo
+## Arquivos
 
-Para acessar a área administrativa do sistema:
-- **Atalho de Teclado:** Pressione `Ctrl + Shift + A` em qualquer lugar da página.
-- **Parâmetro na URL:** Acesse adicionando `?admin` ao final do link (ex: `index.html?admin`).
-- **Senha Padrão:** `admin123`
+- `index.html` — estrutura e conteúdo.
+- `barbershop.css` — identidade visual e layout responsivo.
+- `barbershop.js` — configuração do negócio, renderização segura e contatos.
