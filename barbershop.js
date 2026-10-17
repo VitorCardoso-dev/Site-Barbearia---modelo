@@ -2,7 +2,6 @@
 // CONFIG
 // ============================================================
 const SHOP = { name:'Barber Premium', whatsapp:'5511999998888', mapLat:-23.5505, mapLng:-46.6333 };
-const ADMIN_PWD = 'admin123';
 
 // ============================================================
 // STATE
@@ -315,6 +314,7 @@ function copyCode(){
 }
 function shareWhatsApp(){
   const a=S.finalApt; if(!a)return;
+  if(!SHOP.whatsapp){toast('Configure o WhatsApp real da barbearia antes de compartilhar.','error');return;}
   const msg=encodeURIComponent(`✂️ *${SHOP.name}*\n📋 Código: *${a.booking_code}*\n✂️ ${a.service_name}\n💈 ${a.barber_name}\n📅 ${fmtD(a.date)} às ${a.time}\n💰 ${fmt(a.service_price)}`);
   window.open(`https://wa.me/${SHOP.whatsapp}?text=${msg}`,'_blank');
 }
@@ -370,7 +370,4 @@ function resetClientSearch(){
 document.addEventListener('DOMContentLoaded',()=>{
   loadData(); renderServices(); renderTeam();
   setTimeout(initMap,600);
-  checkAdminParam();
-  // Ctrl+Shift+A → admin login
-  document.addEventListener('keydown',e=>{ if(e.ctrlKey&&e.shiftKey&&e.key==='A') $('admin-login-modal').classList.add('open'); });
 });
