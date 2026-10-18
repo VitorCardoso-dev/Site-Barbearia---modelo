@@ -18,7 +18,7 @@ const S = {
 // ============================================================
 const fmt = n => `R$ ${Number(n||0).toFixed(2).replace('.',',')}`;
 const fmtD = d => { if(!d)return''; const[y,m,day]=d.split('-'); return `${day}/${m}/${y}`; };
-const todayStr = () => new Date().toISOString().split('T')[0];
+const todayStr = () => { const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
 const genCode = () => 'BP'+Math.random().toString(36).substring(2,8).toUpperCase();
 const stars = n => '★'.repeat(Math.round(n||5))+'☆'.repeat(5-Math.round(n||5));
 const $=id=>document.getElementById(id);
@@ -63,42 +63,52 @@ document.addEventListener('keydown', (e) => {
 // ============================================================
 // DATA – localStorage (offline demo; swap for API calls)
 // ============================================================
+function readStoredArray(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const value = JSON.parse(raw);
+    return Array.isArray(value) ? value : null;
+  } catch (error) {
+    console.warn('Ignoring invalid local data for ' + key, error);
+    return null;
+  }
+}
+
 function saveData() {
-  localStorage.setItem('bp_s',JSON.stringify(S.services));
-  localStorage.setItem('bp_b',JSON.stringify(S.barbers));
-  localStorage.setItem('bp_a',JSON.stringify(S.appointments));
-  localStorage.setItem('bp_c',JSON.stringify(S.coupons));
+  try {
+    localStorage.setItem('bp_s', JSON.stringify(S.services));
+    localStorage.setItem('bp_b', JSON.stringify(S.barbers));
+    localStorage.setItem('bp_a', JSON.stringify(S.appointments));
+    localStorage.setItem('bp_c', JSON.stringify(S.coupons));
+    return true;
+  } catch (error) {
+    console.error('Could not save local demo data', error);
+    toast('Não foi possível salvar os dados neste navegador.', 'error');
+    return false;
+  }
 }
 
 function loadData() {
-  const s=localStorage.getItem('bp_s');
-  const b=localStorage.getItem('bp_b');
-  const a=localStorage.getItem('bp_a');
-  const c=localStorage.getItem('bp_c');
-  if(s){ S.services=JSON.parse(s); } else {
-    S.services=[
-      {id:'s1',name:'Corte Clássico',category:'corte',price:55,duration_minutes:45,description:'Corte tradicional com acabamento impecável usando tesoura e máquina.',is_active:true},
-      {id:'s2',name:'Corte + Barba',category:'combo',price:90,duration_minutes:75,description:'Combo premium: corte personalizado + modelagem completa da barba.',is_active:true},
-      {id:'s3',name:'Barba Completa',category:'barba',price:45,duration_minutes:40,description:'Modelagem e aparagem completa com toalha quente e produtos premium.',is_active:true},
-      {id:'s4',name:'Degradê Premium',category:'corte',price:65,duration_minutes:50,description:'Degradê perfeito com transição suave e acabamento artístico.',is_active:true},
-      {id:'s5',name:'Tratamento Capilar',category:'tratamento',price:80,duration_minutes:60,description:'Hidratação profunda com produtos importados.',is_active:true},
-      {id:'s6',name:'Hot Towel Shave',category:'barba',price:70,duration_minutes:55,description:'Barbear clássico com navalha, toalha quente e bálsamo relaxante.',is_active:true},
-    ]; saveData();
-  }
-  if(b){ S.barbers=JSON.parse(b); } else {
-    S.barbers=[
-      {id:'b1',name:'Carlos Eduardo',specialty:'Degradê & Navalhado',experience_years:8,avg_rating:4.9,total_reviews:234,is_active:true,work_days:[1,2,3,4,5,6],work_start:'08:00',work_end:'20:00',lunch_start:'12:00',lunch_end:'13:00'},
-      {id:'b2',name:'Rafael Santos',specialty:'Barba & Visagismo',experience_years:6,avg_rating:4.8,total_reviews:189,is_active:true,work_days:[1,2,3,4,5,6],work_start:'08:00',work_end:'20:00',lunch_start:'12:00',lunch_end:'13:00'},
-      {id:'b3',name:'Marcos Oliveira',specialty:'Corte Clássico',experience_years:12,avg_rating:5.0,total_reviews:312,is_active:true,work_days:[1,2,3,4,5,6],work_start:'08:00',work_end:'20:00',lunch_start:'12:00',lunch_end:'13:00'},
-    ]; saveData();
-  }
-  if(a){ S.appointments=JSON.parse(a); }
-  if(c){ S.coupons=JSON.parse(c); } else {
-    S.coupons=[{id:'c1',code:'BEMVINDO10',discount_percent:10,is_active:true,max_uses:50,current_uses:0,valid_until:'2025-12-31'}]; saveData();
-  }
+  const s = readStoredArray('bp_s'), b = readStoredArray('bp_b'), a = readStoredArray('bp_a'), c = readStoredArray('bp_c');
+  S.services = s || [
+    {id:'s1',name:'Corte Clássico',category:'corte',price:55,duration_minutes:45,description:'Corte tradicional com acabamento impecável usando tesoura e máquina.',is_active:true},
+    {id:'s2',name:'Corte + Barba',category:'combo',price:90,duration_minutes:75,description:'Combo premium: corte personalizado + modelagem completa da barba.',is_active:true},
+    {id:'s3',name:'Barba Completa',category:'barba',price:45,duration_minutes:40,description:'Modelagem e aparagem completa com toalha quente e produtos premium.',is_active:true},
+    {id:'s4',name:'Degradê Premium',category:'corte',price:65,duration_minutes:50,description:'Degradê perfeito com transição suave e acabamento artístico.',is_active:true},
+    {id:'s5',name:'Tratamento Capilar',category:'tratamento',price:80,duration_minutes:60,description:'Hidratação profunda com produtos importados.',is_active:true},
+    {id:'s6',name:'Hot Towel Shave',category:'barba',price:70,duration_minutes:55,description:'Barbear clássico com navalha, toalha quente e bálsamo relaxante.',is_active:true},
+  ];
+  S.barbers = b || [
+    {id:'b1',name:'Carlos Eduardo',specialty:'Degradê & Navalhado',experience_years:8,avg_rating:4.9,total_reviews:234,is_active:true,work_days:[1,2,3,4,5,6],work_start:'08:00',work_end:'20:00',lunch_start:'12:00',lunch_end:'13:00'},
+    {id:'b2',name:'Rafael Santos',specialty:'Barba & Visagismo',experience_years:6,avg_rating:4.8,total_reviews:189,is_active:true,work_days:[1,2,3,4,5,6],work_start:'08:00',work_end:'20:00',lunch_start:'12:00',lunch_end:'13:00'},
+    {id:'b3',name:'Marcos Oliveira',specialty:'Corte Clássico',experience_years:12,avg_rating:5.0,total_reviews:312,is_active:true,work_days:[1,2,3,4,5,6],work_start:'08:00',work_end:'20:00',lunch_start:'12:00',lunch_end:'13:00'},
+  ];
+  S.appointments = a || [];
+  S.coupons = c || [{id:'c1',code:'BEMVINDO10',discount_percent:10,is_active:true,max_uses:50,current_uses:0,valid_until:'2025-12-31'}];
+  if (!s || !b || !a || !c) saveData();
 }
 
-// ============================================================
 // RENDER HOME
 // ============================================================
 function renderServices() {
@@ -246,23 +256,20 @@ function renderTimeSlots(){
   const grid=$('time-grid');
   const barber=S.barbers.find(b=>b.id===S.bk.barber);
   if(!barber||!S.bk.date){grid.innerHTML='<p style="color:var(--muted);">Selecione data e barbeiro.</p>';return;}
-  const svc=S.services.find(s=>s.id===S.bk.service);
-  const dur=svc?svc.duration_minutes:30;
-  const booked=S.appointments.filter(a=>a.barber_id===S.bk.barber&&a.date===S.bk.date&&a.status!=='cancelled').map(a=>a.time);
-  const [eh,em]=( barber.work_end||'20:00').split(':').map(Number);
-  const [lsh,lsm]=(barber.lunch_start||'12:00').split(':').map(Number);
-  const [leh,lem]=(barber.lunch_end||'13:00').split(':').map(Number);
-  let [sh,sm]=( barber.work_start||'08:00').split(':').map(Number);
-  const slots=[];
+  const svc=S.services.find(s=>s.id===S.bk.service), dur=Math.max(1,Number(svc&&svc.duration_minutes)||30);
+  const [eh,em]=(barber.work_end||'20:00').split(':').map(Number), [lsh,lsm]=(barber.lunch_start||'12:00').split(':').map(Number), [leh,lem]=(barber.lunch_end||'13:00').split(':').map(Number);
+  let [sh,sm]=(barber.work_start||'08:00').split(':').map(Number);
+  const dayOfWeek=new Date(S.bk.date+'T00:00:00').getDay(), workDays=Array.isArray(barber.work_days)?barber.work_days:[1,2,3,4,5,6];
+  if(!workDays.includes(dayOfWeek)){grid.innerHTML='<p style="color:var(--muted);">Este profissional não atende neste dia. Escolha outra data.</p>';return;}
+  const booked=S.appointments.filter(a=>a.barber_id===S.bk.barber&&a.date===S.bk.date&&a.status!=='cancelled'), lunchStart=lsh*60+lsm, lunchEnd=leh*60+lem, now=new Date(), slots=[];
   while(sh*60+sm+dur<=eh*60+em){
-    const t=String(sh).padStart(2,'0')+':'+String(sm).padStart(2,'0');
-    const inLunch=(sh*60+sm>=lsh*60+lsm)&&(sh*60+sm<leh*60+lem);
-    slots.push({t, ok:!inLunch&&!booked.includes(t)});
-    sm+=30; if(sm>=60){sh++;sm-=60;}
+    const begin=sh*60+sm, finish=begin+dur, t=String(sh).padStart(2,'0')+':'+String(sm).padStart(2,'0');
+    const overlapsLunch=lunchEnd>lunchStart&&begin<lunchEnd&&finish>lunchStart;
+    const overlapsBooking=booked.some(a=>{const p=String(a.time||'00:00').split(':').map(Number), aStart=p[0]*60+p[1], aEnd=aStart+(Number(a.duration_minutes)||30);return begin<aEnd&&finish>aStart;});
+    const isPast=S.bk.date<todayStr()||(S.bk.date===todayStr()&&begin<=now.getHours()*60+now.getMinutes());
+    slots.push({t:t,ok:!overlapsLunch&&!overlapsBooking&&!isPast}); sm+=30; if(sm>=60){sh++;sm-=60;}
   }
-  grid.innerHTML=slots.length? slots.map(s=>`
-    <div class="tslot ${s.t===S.bk.time?'sel':''} ${!s.ok?'busy':''}" ${s.ok?`onclick="selectTime('${s.t}')"`:''}>${s.t}</div>`).join('')
-  : '<p style="color:var(--muted);">Sem horários disponíveis.</p>';
+  grid.innerHTML=slots.length?slots.map(s=>'<div class="tslot '+(s.t===S.bk.time?'sel':'')+' '+(!s.ok?'busy':'')+'" '+(s.ok?'onclick="selectTime(\''+s.t+'\')"':'')+'>'+s.t+'</div>').join(''):'<p style="color:var(--muted);">Sem horários disponíveis.</p>';
 }
 function selectTime(t){ S.bk.time=t; renderTimeSlots(); }
 
@@ -278,39 +285,27 @@ function renderBookingSummary(){
 }
 
 function confirmBooking(){
-  const name=$('client-name').value.trim();
-  const phone=$('client-phone').value.trim();
+  const name=$('client-name').value.trim(), phone=$('client-phone').value.trim(), digits=phone.replace(/\D/g,'');
   if(!name||!phone){toast('Nome e telefone são obrigatórios','error');return;}
-  const svc=S.services.find(s=>s.id===S.bk.service);
-  const barber=S.barbers.find(b=>b.id===S.bk.barber);
-  const btn=$('confirm-btn'); btn.textContent='Confirmando...'; btn.disabled=true;
-  setTimeout(()=>{
-    const apt={
-      id:'apt_'+Date.now(), client_name:name, client_phone:phone,
-      client_email:$('client-email').value,
-      barber_id:S.bk.barber, barber_name:barber?.name,
-      service_id:S.bk.service, service_name:svc?.name, service_price:svc?.price,
-      date:S.bk.date, time:S.bk.time, duration_minutes:svc?.duration_minutes,
-      status:'confirmed', payment_method:$('payment-method').value,
-      notes:$('booking-notes').value, booking_code:genCode(),
-      created_date:new Date().toISOString(),
-    };
-    S.appointments.push(apt); saveData(); S.finalApt=apt;
-    document.querySelectorAll('.booking-step').forEach(el=>el.classList.remove('active'));
-    $('step-6').classList.add('active');
-    $('success-code').textContent=apt.booking_code;
-    $('success-summary').innerHTML=`
-      <div class="sum-row"><span class="sl">Serviço</span><span>${apt.service_name}</span></div>
-      <div class="sum-row"><span class="sl">Profissional</span><span>${apt.barber_name}</span></div>
-      <div class="sum-row"><span class="sl">Data & Hora</span><span>${fmtD(apt.date)} às ${apt.time}</span></div>
-      <div class="sum-row total"><span class="sl">Total</span><span class="sv">${fmt(apt.service_price)}</span></div>`;
-    toast('Demonstração concluída — reserva não enviada.');
-    btn.textContent='Confirmar ✓'; btn.disabled=false;
-  },600);
+  if(digits.length<10||digits.length>13){toast('Informe um telefone válido com DDD.','error');return;}
+  const svc=S.services.find(s=>s.id===S.bk.service), barber=S.barbers.find(b=>b.id===S.bk.barber);
+  if(!svc||!barber||!S.bk.date||!S.bk.time){toast('Revise serviço, profissional, data e horário.','error');return;}
+  if(!SHOP.whatsapp){toast('O WhatsApp da barbearia ainda não foi configurado. Esta demonstração não enviou seu pedido.','error');return;}
+  const email=$('client-email').value.trim();
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast('Informe um e-mail válido ou deixe o campo vazio.','error');return;}
+  const bookingCode=genCode();
+  const lines=['Olá! Gostaria de solicitar um agendamento na '+SHOP.name+'.','Código de referência: '+bookingCode,'Nome: '+name,'Telefone: '+phone,email?'E-mail: '+email:null,'Serviço: '+svc.name+' — '+fmt(svc.price),'Profissional: '+barber.name,'Data: '+fmtD(S.bk.date),'Horário solicitado: '+S.bk.time,'Duração estimada: '+svc.duration_minutes+' min','Pagamento pretendido: '+$('payment-method').value,$('booking-notes').value.trim()?'Observações: '+$('booking-notes').value.trim():null,'Entendo que o horário só estará confirmado após a resposta da barbearia.'].filter(Boolean);
+  const url='https://wa.me/'+String(SHOP.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(lines.join('\n'));
+  const win=window.open(url,'_blank','noopener,noreferrer');
+  if(!win){toast('O navegador bloqueou a abertura do WhatsApp. Permita pop-ups e tente novamente.','error');return;}
+  S.finalApt={booking_code:bookingCode,service_name:svc.name,service_price:svc.price,barber_name:barber.name,date:S.bk.date,time:S.bk.time};
+  document.querySelectorAll('.booking-step').forEach(el=>el.classList.remove('active')); $('step-6').classList.add('active');
+  $('success-code').textContent=bookingCode;
+  $('success-summary').innerHTML='<div class="sum-row"><span class="sl">Serviço</span><span>'+svc.name+'</span></div><div class="sum-row"><span class="sl">Profissional</span><span>'+barber.name+'</span></div><div class="sum-row"><span class="sl">Data & Hora solicitadas</span><span>'+fmtD(S.bk.date)+' às '+S.bk.time+'</span></div><div class="sum-row total"><span class="sl">Total estimado</span><span class="sv">'+fmt(svc.price)+'</span></div>';
+  toast('Pedido preparado no WhatsApp. Envie a mensagem para solicitar o horário.');
 }
-
 function copyCode(){
-  if(S.finalApt) navigator.clipboard.writeText(S.finalApt.booking_code).then(()=>toast('Código copiado!'));
+  if(S.finalApt&&navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(S.finalApt.booking_code).then(()=>toast('Código copiado!')).catch(()=>toast('Não foi possível copiar o código.','error'));
 }
 function shareWhatsApp(){
   const a=S.finalApt; if(!a)return;
@@ -337,7 +332,7 @@ $('mobile-client-btn').onclick=e=>{e.preventDefault();$('mobile-nav').classList.
 function searchClientBookings(){
   const phone=$('client-search-phone').value.trim().replace(/\D/g,'');
   if(!phone){toast('Digite seu telefone','error');return;}
-  const results=S.appointments.filter(a=>a.client_phone.replace(/\D/g,'').includes(phone));
+  const results=S.appointments.filter(a=>String(a.client_phone||'').replace(/\D/g,'')===phone);
   const statusL={confirmed:'Confirmado',completed:'Concluído',cancelled:'Cancelado',no_show:'Faltou'};
   const statusC={confirmed:'badge-green',completed:'badge-gold',cancelled:'badge-red',no_show:'badge-muted'};
   $('client-appointments-list').innerHTML=results.length?
