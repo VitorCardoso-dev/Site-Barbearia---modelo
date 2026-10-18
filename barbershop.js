@@ -312,7 +312,27 @@ function shareWhatsApp(){
   const a=S.finalApt; if(!a)return;
   if(!SHOP.whatsapp){toast('Configure o WhatsApp real da barbearia antes de compartilhar.','error');return;}
   const msg=encodeURIComponent(`✂️ *${SHOP.name}*\n📋 Código: *${a.booking_code}*\n✂️ ${a.service_name}\n💈 ${a.barber_name}\n📅 ${fmtD(a.date)} às ${a.time}\n💰 ${fmt(a.service_price)}`);
-  window.open(`https://wa.me/${SHOP.whatsapp}?text=${msg}`,'_blank');
+  window.open(`https://wa.me/${String(SHOP.whatsapp).replace(/\\D/g,'')}?text=${msg}`,'_blank','noopener,noreferrer');
+}
+
+// Keep every WhatsApp entry point tied to the configured business number.
+// If this is still a demo, do not send visitors to the placeholder phone number.
+function configureWhatsAppLinks(){
+  const number=String(SHOP.whatsapp||'').replace(/\\D/g,'');
+  document.querySelectorAll('a[href*="wa.me"]').forEach(link=>{
+    if(number){
+      link.href='https://wa.me/'+number;
+      link.target='_blank';
+      link.rel='noopener noreferrer';
+    }else{
+      link.href='#';
+      link.removeAttribute('target');
+      link.addEventListener('click',e=>{
+        e.preventDefault();
+        toast('O WhatsApp real da barbearia ainda não foi configurado. Este site está em demonstração.','error');
+      });
+    }
+  });
 }
 
 // Book buttons
@@ -365,6 +385,7 @@ function resetClientSearch(){
 
 document.addEventListener('DOMContentLoaded',()=>{
   const year=$('copyright-year'); if(year) year.textContent=String(new Date().getFullYear());
+  configureWhatsAppLinks();
   loadData(); renderServices(); renderTeam();
   setTimeout(initMap,600);
 });
