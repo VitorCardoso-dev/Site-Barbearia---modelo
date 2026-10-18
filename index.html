@@ -62,7 +62,7 @@
 </section>
 
 <!-- DEMO NOTICE -->
-<div class="container" style="padding-top:18px;padding-bottom:0;"><p role="note" style="border:1px solid rgba(197,160,89,.35);padding:12px 16px;color:var(--muted);font-size:13px;text-align:center;">Demonstração: os agendamentos são salvos apenas neste navegador e não são enviados à barbearia. Preços, endereço e contatos são exemplos.</p></div>
+<div class="container" style="padding-top:18px;padding-bottom:0;"><p role="note" style="border:1px solid rgba(197,160,89,.35);padding:12px 16px;color:var(--muted);font-size:13px;text-align:center;">Modelo de demonstração: os dados, preços, equipe, endereço e contatos abaixo são exemplos. Configure os dados reais antes de divulgar o site; solicitações pelo WhatsApp só funcionam após configurar o número da barbearia.</p></div>
 
 <!-- INFO BAR -->
 <section id="infobar">
@@ -201,7 +201,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2024 Barber Premium. Todos os direitos reservados.</p>
+      <p class="footer-copy">© <span id="copyright-year">2026</span> Barber Premium. Todos os direitos reservados.</p>
       <p class="footer-copy">Feito com ♥ em São Paulo</p>
     </div>
   </div>
@@ -225,7 +225,7 @@
       <button class="modal-close" id="booking-modal-close">✕</button>
     </div>
     <div class="modal-body">
-      <p role="note" style="margin-bottom:20px;color:var(--muted);font-size:13px;">Formulário demonstrativo: este envio não reserva um horário real.</p>
+      <p role="note" style="margin-bottom:20px;color:var(--muted);font-size:13px;">O horário é apenas uma solicitação. Ele só estará confirmado após a barbearia responder pelo WhatsApp.</p>
       <div class="booking-steps-nav" id="booking-steps-nav"></div>
       <div class="booking-step active" id="step-1">
         <div class="label-gold" style="margin-bottom:16px;">Escolha o Serviço</div>
@@ -251,7 +251,7 @@
       <div class="booking-step" id="step-5">
         <div class="label-gold" style="margin-bottom:16px;">Confirmar Agendamento</div>
         <div class="summary-box" id="booking-summary"></div>
-        <div class="form-row"><div class="form-group"><label class="form-label">Nome <span class="req">*</span></label><input type="text" id="client-name" placeholder="Seu nome" /></div><div class="form-group"><label class="form-label">Telefone <span class="req">*</span></label><input type="tel" id="client-phone" placeholder="(11) 99999-9999" /></div></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Nome <span class="req">*</span></label><input type="text" id="client-name" placeholder="Seu nome" /></div><div class="form-group"><label class="form-label">Telefone <span class="req">*</span></label><input type="tel" id="client-phone" placeholder="(DDD) 99999-9999" /></div></div>
         <div class="form-group"><label class="form-label">Email</label><input type="email" id="client-email" placeholder="seu@email.com" /></div>
         <div class="form-group"><label class="form-label">Pagamento</label><select id="payment-method"><option value="">Selecione...</option><option>PIX</option><option>Dinheiro</option><option>Cartão de Débito</option><option>Cartão de Crédito</option></select></div>
         <div class="form-group"><label class="form-label">Observações</label><textarea id="booking-notes" rows="2" placeholder="Detalhes especiais..."></textarea></div>
@@ -260,9 +260,9 @@
       <div class="booking-step" id="step-6">
         <div style="text-align:center;padding:20px 0;">
           <div class="success-icon">✓</div>
-          <div class="label-gold">Demonstração concluída</div>
+          <div class="label-gold">Solicitação preparada</div>
           <h3 style="font-family:var(--font-display);font-size:1.8rem;margin:12px 0;">Simulação finalizada</h3>
-          <p class="text-muted" style="font-size:14px;">Código de demonstração (não é uma reserva real):</p>
+          <p class="text-muted" style="font-size:14px;">Código de referência da solicitação (não confirma reserva):</p>
           <div class="booking-code" id="success-code">—</div>
           <div class="summary-box" id="success-summary" style="text-align:left;margin:24px 0;"></div>
           <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
