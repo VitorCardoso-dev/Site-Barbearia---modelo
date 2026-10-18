@@ -1,7 +1,7 @@
 // ============================================================
 // CONFIG
 // ============================================================
-const SHOP = { name:'Barber Premium', whatsapp:'', mapLat:-23.5505, mapLng:-46.6333 };
+const SHOP = { name:'Barber Premium', whatsapp:'', mapLat:-23.5505, mapLng:-46.6333 }; // Configure o número real em formato internacional, somente dígitos, antes de publicar.
 
 // ============================================================
 // STATE
@@ -363,6 +363,7 @@ function resetClientSearch(){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  const year=$('copyright-year'); if(year) year.textContent=String(new Date().getFullYear());
   loadData(); renderServices(); renderTeam();
   setTimeout(initMap,600);
 });
