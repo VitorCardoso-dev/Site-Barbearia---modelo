@@ -296,7 +296,7 @@ function confirmBooking(){
   const bookingCode=genCode();
   const lines=['Olá! Gostaria de solicitar um agendamento na '+SHOP.name+'.','Código de referência: '+bookingCode,'Nome: '+name,'Telefone: '+phone,email?'E-mail: '+email:null,'Serviço: '+svc.name+' — '+fmt(svc.price),'Profissional: '+barber.name,'Data: '+fmtD(S.bk.date),'Horário solicitado: '+S.bk.time,'Duração estimada: '+svc.duration_minutes+' min','Pagamento pretendido: '+$('payment-method').value,$('booking-notes').value.trim()?'Observações: '+$('booking-notes').value.trim():null,'Entendo que o horário só estará confirmado após a resposta da barbearia.'].filter(Boolean);
   const url='https://wa.me/'+String(SHOP.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(lines.join('\n'));
-  const win=window.open(url,'_blank','noopener,noreferrer');
+  const win=window.open(url,'_blank');
   if(!win){toast('O navegador bloqueou a abertura do WhatsApp. Permita pop-ups e tente novamente.','error');return;}
   S.finalApt={booking_code:bookingCode,service_name:svc.name,service_price:svc.price,barber_name:barber.name,date:S.bk.date,time:S.bk.time};
   document.querySelectorAll('.booking-step').forEach(el=>el.classList.remove('active')); $('step-6').classList.add('active');
