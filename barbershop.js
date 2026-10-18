@@ -298,6 +298,7 @@ function confirmBooking(){
   const url='https://wa.me/'+String(SHOP.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(lines.join('\n'));
   const win=window.open(url,'_blank');
   if(!win){toast('O navegador bloqueou a abertura do WhatsApp. Permita pop-ups e tente novamente.','error');return;}
+  win.opener=null;
   S.finalApt={booking_code:bookingCode,service_name:svc.name,service_price:svc.price,barber_name:barber.name,date:S.bk.date,time:S.bk.time};
   document.querySelectorAll('.booking-step').forEach(el=>el.classList.remove('active')); $('step-6').classList.add('active');
   $('success-code').textContent=bookingCode;
