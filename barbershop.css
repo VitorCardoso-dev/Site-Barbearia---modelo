@@ -395,73 +395,54 @@ select:focus {
   background: var(--fg);
 }
 
-.mobile-nav
-{
-  display: none;
-  position: fixed;
-  top: 72px;
-  right: 24px;
-  width: 320px;
-  max-width: calc(100% - 48px);
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px 16px;
-  z-index: 999;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.6);
-  transform: translateY(-8px) scale(.99);
-  opacity: 0;
-  transition: transform .22s ease, opacity .22s ease;
-  pointer-events: none;
+.mobile-nav-backdrop {
+  position: fixed; inset: 0; z-index: 998;
+  background: rgba(0,0,0,.62); backdrop-filter: blur(5px);
+  opacity: 0; visibility: hidden; transition: opacity .32s ease, visibility .32s ease;
 }
-
-.mobile-nav.open
-{
-  display: flex;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  pointer-events: auto;
+.mobile-nav-backdrop.open { opacity: 1; visibility: visible; }
+.mobile-nav {
+  position: fixed; inset: 0 auto 0 0; z-index: 999;
+  width: min(400px, 86vw); height: 100dvh; padding: 24px;
+  background: #fff; color: #171717; display: flex; flex-direction: column;
+  gap: 0; box-shadow: 18px 0 50px rgba(0,0,0,.16);
+  transform: translateX(-102%); visibility: hidden;
+  transition: transform .38s cubic-bezier(.22,.8,.25,1), visibility .38s ease;
+  border: 0; border-radius: 0; max-width: none; opacity: 1; pointer-events: none;
 }
-
-.mobile-nav a
-{
-  font-family: var(--fh);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  width: 100%;
-  padding: 8px 6px;
-  text-align: left;
+.mobile-nav.open { transform: translateX(0); visibility: visible; pointer-events: auto; }
+.mobile-nav-header {
+  min-height: 72px; display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 0 0 22px; border-bottom: 1px solid #e6e6e6; flex-shrink: 0;
 }
-
-.mobile-nav a:hover,
-.mobile-link:hover
-{
-  color: var(--primary);
+.mobile-nav-brand {
+  color: #171717; font-family: var(--fh); font-weight: 800; font-size: clamp(17px, 4.5vw, 23px);
+  letter-spacing: .055em; white-space: nowrap;
 }
-
-.mobile-close
-{
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 20px;
-  background: none;
-  color: var(--muted);
+.mobile-nav-brand span { color: var(--primary-dk); }
+.mobile-close {
+  position: static; flex-shrink: 0; width: 36px; height: 36px; padding: 0;
+  display: grid; place-items: center; background: transparent; color: #171717;
+  font-family: Arial, sans-serif; font-size: 32px; line-height: 1;
 }
-
-@media (max-width: 768px)
-{
-  .nav-links
-  {
-    display: none;
-  }
-  .hamburger
-  {
-    display: flex;
-  }
+.mobile-nav-links { display: flex; flex-direction: column; align-items: stretch; padding-top: 20px; gap: 0; }
+.mobile-nav a.mobile-link {
+  width: 100%; padding: 13px 0; text-align: left; color: #1b1b1b;
+  font-family: var(--fh); font-size: 14px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; transition: color .2s ease, padding-left .2s ease;
+}
+.mobile-nav a.mobile-link:hover { color: var(--primary-dk); padding-left: 4px; }
+.mobile-nav a.btn { margin-top: 14px; text-align: center; color: #0a0a0a; }
+.mobile-nav-footer {
+  margin-top: auto; padding-top: 22px; border-top: 1px solid #e6e6e6;
+  color: #777; text-align: center; font-size: 12px; line-height: 1.6;
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav, .mobile-nav-backdrop { transition: none; }
 }
 
 /* ===== HERO ===== */
@@ -1685,4 +1666,19 @@ footer
 .act-red:hover
 {
   background: rgba(231,76,60,.25);
+}
+
+/* ===== SCROLL REVEAL ===== */
+.scroll-reveal {
+  opacity: 0; transform: translate3d(0, 24px, 0);
+  transition: opacity .7s ease var(--reveal-delay, 0ms), transform .7s cubic-bezier(.2,.7,.2,1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.scroll-reveal.is-visible { opacity: 1; transform: translate3d(0,0,0); }
+.gallery-item.scroll-reveal { transform: translate3d(0,20px,0) scale(.985); }
+.gallery-item.scroll-reveal.is-visible { transform: translate3d(0,0,0) scale(1); }
+body.mobile-menu-open { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-reveal, .gallery-item.scroll-reveal { opacity: 1; transform: none; transition: none; will-change: auto; }
 }
