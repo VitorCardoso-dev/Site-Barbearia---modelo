@@ -33,14 +33,18 @@
   </div>
 </nav>
 
-<div class="mobile-nav" id="mobile-nav">
-  <button class="mobile-close" id="mobile-close">✕</button>
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+<div class="mobile-nav" id="mobile-nav" aria-label="Menu principal" aria-hidden="true">
+  <div class="mobile-nav-header"><a href="#hero" class="mobile-nav-brand">BARBER <span>PREMIUM</span></a><button class="mobile-close" id="mobile-close" aria-label="Fechar menu">×</button></div>
+  <div class="mobile-nav-links">
   <a href="#about" class="mobile-link">Sobre</a>
   <a href="#services" class="mobile-link">Serviços</a>
   <a href="#team" class="mobile-link">Equipe</a>
   <a href="#location" class="mobile-link">Localização</a>
   <a href="#" class="mobile-link" id="mobile-client-btn">Minha Reserva</a>
   <a href="#" class="btn btn-primary" id="mobile-book-btn">Agendar Agora</a>
+  </div>
+  <div class="mobile-nav-footer">© <span id="mobile-menu-year">2026</span> Barber Premium. Todos os direitos reservados.</div>
 </div>
 
 <!-- HERO -->
