@@ -40,25 +40,25 @@ function toast(msg, type='success') {
 window.addEventListener('scroll',()=>{
   $('navbar').classList.toggle('scrolled',window.scrollY>60);
 });
-$('hamburger-btn').onclick=()=>$('mobile-nav').classList.add('open');
-$('mobile-close').onclick=()=>$('mobile-nav').classList.remove('open');
-document.querySelectorAll('.mobile-link').forEach(l=>{
-  l.addEventListener('click',()=>$('mobile-nav').classList.remove('open'));
+const mobileNav=$('mobile-nav'), mobileBackdrop=$('mobile-nav-backdrop'), hamburger=$('hamburger-btn');
+function setMobileMenu(open){
+  if(!mobileNav)return;
+  mobileNav.classList.toggle('open',open);
+  if(mobileBackdrop)mobileBackdrop.classList.toggle('open',open);
+  mobileNav.setAttribute('aria-hidden',String(!open));
+  if(hamburger)hamburger.setAttribute('aria-expanded',String(open));
+  document.body.classList.toggle('mobile-menu-open',open);
+}
+if(hamburger)hamburger.onclick=()=>setMobileMenu(true);
+if($('mobile-close'))$('mobile-close').onclick=()=>setMobileMenu(false);
+if(mobileBackdrop)mobileBackdrop.onclick=()=>setMobileMenu(false);
+document.querySelectorAll('.mobile-link').forEach(link=>{
+  link.addEventListener('click',()=>setMobileMenu(false));
 });
-
-// Close mobile panel when clicking outside it or pressing Escape
-document.addEventListener('click', (e) => {
-  const nav = $('mobile-nav');
-  const ham = $('hamburger-btn');
-  if (!nav || !nav.classList.contains('open')) return;
-  if (nav.contains(e.target) || ham.contains(e.target)) return;
-  nav.classList.remove('open');
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape')setMobileMenu(false);
 });
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    const nav = $('mobile-nav'); if (nav) nav.classList.remove('open');
-  }
-});
+const menuYear=$('mobile-menu-year');if(menuYear)menuYear.textContent=String(new Date().getFullYear());
 
 // ============================================================
 // DATA – localStorage (offline demo; swap for API calls)
@@ -383,7 +383,39 @@ function resetClientSearch(){
   $('client-results-view').style.display='none';
 }
 
+
+// Scroll reveal animations: elements animate only when they enter the viewport.
+function initScrollReveal(){
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const selectors=[
+    '#infobar .infobar-item','.about-img-wrap','#about .container > .about-grid > div',
+    '.section-header','.diff-item','.svc-card','.gallery-item','.team-card',
+    '.contact-item','.location-grid > *','.footer-grid > div'
+  ];
+  document.querySelectorAll(selectors.join(',')).forEach((el,index)=>{
+    if(el.closest('.modal-backdrop')||el.dataset.revealReady)return;
+    el.dataset.revealReady='true';
+    el.classList.add('scroll-reveal');
+    if(reduced)el.classList.add('is-visible');
+    else el.style.setProperty('--reveal-delay',Math.min(index%5,4)*75+'ms');
+  });
+  if(reduced||!('IntersectionObserver' in window)){
+    document.querySelectorAll('.scroll-reveal').forEach(el=>el.classList.add('is-visible'));
+    return;
+  }
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -45px 0px'});
+  document.querySelectorAll('.scroll-reveal:not(.is-visible)').forEach(el=>observer.observe(el));
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
+  initScrollReveal();
   const year=$('copyright-year'); if(year) year.textContent=String(new Date().getFullYear());
   configureWhatsAppLinks();
   loadData(); renderServices(); renderTeam();
