@@ -388,8 +388,9 @@ function resetClientSearch(){
 function initScrollReveal(){
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const selectors=[
-    '#infobar .infobar-item','.about-img-wrap','#about .container > .about-grid > div',
-    '.section-header','.diff-item','.svc-card','.gallery-item','.team-card',
+    '#hero .hero-content > *','#infobar .infobar-item',
+    'section:not(#hero) .section-header','#about .about-grid > *',
+    '.diff-item','.svc-card','.gallery-item','.team-card',
     '.contact-item','.location-grid > *','.footer-grid > div'
   ];
   document.querySelectorAll(selectors.join(',')).forEach((el,index)=>{
@@ -397,10 +398,12 @@ function initScrollReveal(){
     el.dataset.revealReady='true';
     el.classList.add('scroll-reveal');
     if(reduced)el.classList.add('is-visible');
-    else el.style.setProperty('--reveal-delay',Math.min(index%5,4)*75+'ms');
+    else el.style.setProperty('--reveal-delay',Math.min(index%5,4)*85+'ms');
   });
+
+  const elements=document.querySelectorAll('.scroll-reveal');
   if(reduced||!('IntersectionObserver' in window)){
-    document.querySelectorAll('.scroll-reveal').forEach(el=>el.classList.add('is-visible'));
+    elements.forEach(el=>el.classList.add('is-visible'));
     return;
   }
   const observer=new IntersectionObserver(entries=>{
@@ -410,8 +413,14 @@ function initScrollReveal(){
         observer.unobserve(entry.target);
       }
     });
-  },{threshold:0.12,rootMargin:'0px 0px -45px 0px'});
-  document.querySelectorAll('.scroll-reveal:not(.is-visible)').forEach(el=>observer.observe(el));
+  },{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+  elements.forEach(el=>{
+    if(el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+      el.classList.add('is-visible');
+    } else {
+      observer.observe(el);
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -421,3 +430,4 @@ document.addEventListener('DOMContentLoaded',()=>{
   loadData(); renderServices(); renderTeam();
   setTimeout(initMap,600);
 });
+window.addEventListener('load',initScrollReveal,{once:true});
