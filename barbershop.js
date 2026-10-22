@@ -44,10 +44,14 @@ const mobileNav=$('mobile-nav'), mobileBackdrop=$('mobile-nav-backdrop'), hambur
 function setMobileMenu(open){
   if(!mobileNav)return;
   mobileNav.classList.toggle('open',open);
-  if(mobileBackdrop)mobileBackdrop.classList.toggle('open',open);
+  if(mobileBackdrop){
+    mobileBackdrop.classList.toggle('open',open);
+    mobileBackdrop.setAttribute('aria-hidden',String(!open));
+  }
   mobileNav.setAttribute('aria-hidden',String(!open));
   if(hamburger)hamburger.setAttribute('aria-expanded',String(open));
   document.body.classList.toggle('mobile-menu-open',open);
+  if(open && $('mobile-close'))$('mobile-close').focus({preventScroll:true});
 }
 if(hamburger)hamburger.onclick=()=>setMobileMenu(true);
 if($('mobile-close'))$('mobile-close').onclick=()=>setMobileMenu(false);
@@ -339,7 +343,7 @@ function configureWhatsAppLinks(){
 $('nav-book-btn').onclick=e=>{e.preventDefault();openBookingModal();};
 $('hero-book-btn').onclick=openBookingModal;
 $('location-book-btn').onclick=openBookingModal;
-$('mobile-book-btn').onclick=e=>{e.preventDefault();$('mobile-nav').classList.remove('open');openBookingModal();};
+$('mobile-book-btn').onclick=e=>{e.preventDefault();setMobileMenu(false);openBookingModal();};
 
 // ============================================================
 // CLIENT AREA
@@ -348,7 +352,7 @@ function openClientModal(){ resetClientSearch(); $('client-modal').classList.add
 function closeClientModal(){ $('client-modal').classList.remove('open'); document.body.style.overflow=''; }
 $('client-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeClientModal(); });
 $('nav-client-btn').onclick=e=>{e.preventDefault();openClientModal();};
-$('mobile-client-btn').onclick=e=>{e.preventDefault();$('mobile-nav').classList.remove('open');openClientModal();};
+$('mobile-client-btn').onclick=e=>{e.preventDefault();setMobileMenu(false);openClientModal();};
 
 function searchClientBookings(){
   const phone=$('client-search-phone').value.trim().replace(/\D/g,'');
@@ -391,7 +395,8 @@ function initScrollReveal(){
     '#hero .hero-content > *','#infobar .infobar-item',
     'section:not(#hero) .section-header','#about .about-grid > *',
     '.diff-item','.svc-card','.gallery-item','.team-card',
-    '.contact-item','.location-grid > *','.footer-grid > div'
+    '.contact-item','.location-grid > *','.footer-grid > div',
+    '#services .services-grid > *','#team .team-grid > *'
   ];
   document.querySelectorAll(selectors.join(',')).forEach((el,index)=>{
     if(el.closest('.modal-backdrop')||el.dataset.revealReady)return;
@@ -428,6 +433,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   const year=$('copyright-year'); if(year) year.textContent=String(new Date().getFullYear());
   configureWhatsAppLinks();
   loadData(); renderServices(); renderTeam();
+  // Os cards de serviços e equipe são criados dinamicamente; inicialize as animações depois de renderizá-los.
+  requestAnimationFrame(initScrollReveal);
   setTimeout(initMap,600);
 });
 window.addEventListener('load',initScrollReveal,{once:true});
