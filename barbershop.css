@@ -1777,3 +1777,52 @@ body.mobile-menu-open #navbar {
   display: none !important;
   visibility: hidden !important;
 }
+
+
+/* Footer: ícones lineares alinhados à identidade preta e dourada. */
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: color .2s ease, transform .2s ease;
+}
+.footer-links a:hover {
+  transform: translateX(3px);
+}
+.footer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  color: var(--primary);
+  border: 1px solid rgba(197,160,89,.24);
+  border-radius: 8px;
+  background: rgba(197,160,89,.06);
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.footer-icon svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.footer-icon .icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
+.footer-links a:hover .footer-icon {
+  color: var(--bg);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.footer-icon-whatsapp {
+  color: #25D366;
+  border-color: rgba(37,211,102,.24);
+  background: rgba(37,211,102,.06);
+}
