@@ -1863,3 +1863,65 @@ footer .footer-links a .footer-icon svg {
   position: static !important;
   transform: none !important;
 }
+
+
+/* Correção consistente dos ícones no header e no footer. */
+#navbar .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#navbar .nav-links a .nav-icon,
+#navbar .nav-links a .footer-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 15px !important;
+  min-width: 15px !important;
+  max-width: 15px !important;
+  height: 15px !important;
+  min-height: 15px !important;
+  max-height: 15px !important;
+  flex: 0 0 15px !important;
+  color: var(--fg) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+#navbar .nav-links a .nav-icon svg,
+#navbar .nav-links a .footer-icon svg {
+  display: block !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  max-width: 14px !important;
+  min-height: 14px !important;
+  max-height: 14px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  position: static !important;
+  transform: none !important;
+}
+#navbar .nav-links a:hover .nav-icon,
+#navbar .nav-links a:hover .footer-icon {
+  color: var(--primary) !important;
+}
+footer .footer-links a .footer-icon {
+  color: var(--fg) !important;
+}
+footer .footer-links a .footer-icon-whatsapp {
+  color: var(--fg) !important;
+}
+footer .footer-links a .footer-icon svg {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+footer .footer-links a .footer-icon .icon-fill {
+  fill: currentColor !important;
+  stroke: none !important;
+}
