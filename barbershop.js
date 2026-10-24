@@ -43,6 +43,19 @@ window.addEventListener('scroll',()=>{
 const mobileNav=$('mobile-nav'), mobileBackdrop=$('mobile-nav-backdrop'), hamburger=$('hamburger-btn');
 function setMobileMenu(open){
   if(!mobileNav)return;
+  // Esconde o cabeçalho principal diretamente ao abrir o menu; restaura ao fechar.
+  const mainNavbar=$('navbar');
+  if(mainNavbar){
+    if(open){
+      mainNavbar.dataset.menuPreviousDisplay=mainNavbar.style.display || '';
+      mainNavbar.style.setProperty('display','none','important');
+      mainNavbar.setAttribute('aria-hidden','true');
+    }else{
+      mainNavbar.style.removeProperty('display');
+      delete mainNavbar.dataset.menuPreviousDisplay;
+      mainNavbar.removeAttribute('aria-hidden');
+    }
+  }
   mobileNav.classList.toggle('open',open);
   if(mobileBackdrop){
     mobileBackdrop.classList.toggle('open',open);
