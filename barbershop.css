@@ -1764,3 +1764,16 @@ body.mobile-menu-open { overflow: hidden; }
   html { scroll-behavior: auto; }
   .scroll-reveal, .gallery-item.scroll-reveal { opacity: 1; transform: none; transition: none; will-change: auto; }
 }
+
+/* Menu mobile aberto: mantém visíveis apenas a sidebar e o fundo dela. */
+body.mobile-menu-open > *:not(#mobile-nav):not(#mobile-nav-backdrop) {
+  visibility: hidden !important;
+}
+body.mobile-menu-open > #mobile-nav-backdrop,
+body.mobile-menu-open > #mobile-nav {
+  visibility: visible !important;
+}
+body.mobile-menu-open #navbar {
+  display: none !important;
+  visibility: hidden !important;
+}
