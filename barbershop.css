@@ -1834,3 +1834,32 @@ body.mobile-menu-open #navbar {
   color: #25D366;
   background: transparent;
 }
+
+
+/* Hard limit: footer icons must never inherit global SVG sizing rules. */
+footer .footer-links a .footer-icon {
+  display: inline-flex !important;
+  width: 14px !important;
+  min-width: 14px !important;
+  max-width: 14px !important;
+  height: 14px !important;
+  min-height: 14px !important;
+  max-height: 14px !important;
+  flex: 0 0 14px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+}
+footer .footer-links a .footer-icon svg {
+  display: block !important;
+  width: 12px !important;
+  min-width: 12px !important;
+  max-width: 12px !important;
+  height: 12px !important;
+  min-height: 12px !important;
+  max-height: 12px !important;
+  flex: 0 0 12px !important;
+  position: static !important;
+  transform: none !important;
+}
