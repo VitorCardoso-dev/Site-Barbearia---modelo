@@ -290,6 +290,13 @@ select:focus {
   }
 }
 
+/* Quando o menu lateral abre, o cabeçalho do site sai de cena: o X do próprio painel é o único controle de fechamento. */
+body.mobile-menu-open #navbar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /* ===== NAVBAR ===== */
 #navbar
 {
@@ -396,13 +403,13 @@ select:focus {
 }
 
 .mobile-nav-backdrop {
-  position: fixed; inset: 0; z-index: 998;
+  position: fixed; inset: 0; z-index: 1001;
   background: rgba(3,3,3,.78); backdrop-filter: blur(7px);
   opacity: 0; visibility: hidden; transition: opacity .38s ease, visibility .38s ease;
 }
 .mobile-nav-backdrop.open { opacity: 1; visibility: visible; }
 .mobile-nav {
-  position: fixed; inset: 0 auto 0 0; z-index: 999;
+  position: fixed; inset: 0 auto 0 0; z-index: 1002;
   width: min(420px, 91vw); height: 100vh; height: 100dvh;
   padding: 25px clamp(22px, 6vw, 34px) 20px;
   background:
