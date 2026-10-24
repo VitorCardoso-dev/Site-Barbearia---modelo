@@ -290,11 +290,11 @@ select:focus {
   }
 }
 
-/* Quando o menu lateral abre, o cabeçalho do site sai de cena: o X do próprio painel é o único controle de fechamento. */
+/* O menu lateral aberto deve ser a única camada de navegação visível.
+   display:none evita que logo, título ou botão do cabeçalho apareçam por cima
+   do painel, mesmo durante transições ou diferenças de empilhamento (z-index). */
 body.mobile-menu-open #navbar {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  display: none !important;
 }
 
 /* ===== NAVBAR ===== */
