@@ -332,6 +332,18 @@ function shareWhatsApp(){
   window.open(`https://wa.me/${String(SHOP.whatsapp).replace(/\\D/g,'')}?text=${msg}`,'_blank','noopener,noreferrer');
 }
 
+// Instagram links stay disabled until the business supplies its real profile URL.
+function configureInstagramLinks(){
+  document.querySelectorAll('.instagram-link').forEach(link=>{
+    link.href='#';
+    link.removeAttribute('target');
+    link.addEventListener('click',event=>{
+      event.preventDefault();
+      toast('Adicione o link real do Instagram da barbearia antes de usar este botão.','error');
+    });
+  });
+}
+
 // Keep every WhatsApp entry point tied to the configured business number.
 // If this is still a demo, do not send visitors to the placeholder phone number.
 function configureWhatsAppLinks(){
@@ -445,6 +457,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   initScrollReveal();
   const year=$('copyright-year'); if(year) year.textContent=String(new Date().getFullYear());
   configureWhatsAppLinks();
+configureInstagramLinks();
   loadData(); renderServices(); renderTeam();
   // Os cards de serviços e equipe são criados dinamicamente; inicialize as animações depois de renderizá-los.
   requestAnimationFrame(initScrollReveal);
